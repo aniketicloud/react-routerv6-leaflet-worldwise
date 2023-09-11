@@ -3,11 +3,8 @@ import { AppNav } from "./AppNav";
 import Footer from "./Footer";
 import { Logo } from "./Logo";
 import styles from "./Sidebar.module.css";
-import { FC } from "react";
 
-interface SideBarProps {}
-
-export const SideBar: FC<SideBarProps> = () => (
+export const SideBar = () => (
   <div className={styles.sidebar}>
     <Logo />
     <AppNav />

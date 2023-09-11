@@ -1,11 +1,14 @@
+import { FC } from "react";
 import styles from "./Message.module.css";
 
-function Message({ message }) {
+interface MessageProps {
+  message: string;
+}
+
+export const Message: FC<MessageProps> = ({ message }) => {
   return (
     <p className={styles.message}>
       <span role="img">👋</span> {message}
     </p>
   );
-}
-
-export default Message;
+};
