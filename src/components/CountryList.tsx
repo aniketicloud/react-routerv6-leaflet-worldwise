@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { City } from "../types";
+import type { City } from "../types";
 import styles from "./CountryList.module.css";
 import Spinner from "./Spinner";
 import { Message } from "./Message";
@@ -11,28 +11,33 @@ interface CountryListProps {
   cities: City[];
 }
 
+type CountryItem = {
+  country: string;
+  emoji: string;
+};
+
 export const CountryList: FC<CountryListProps> = ({ cities, isLoading }) => {
-  const uniqueCountryMap = new Map();
-  cities.forEach(({ country, emoji }) => {
-    uniqueCountryMap.set(country, emoji);
-  });
-
-  const countryObjArray = Array.from(uniqueCountryMap, ([key, value]) => ({
-    [key]: value,
-  }));
-
-  console.log(countryObjArray);
-
   if (isLoading) return <Spinner />;
   if (!cities.length)
     return (
       <Message message="Add your first city by clicking on a city on the map" />
     );
 
+  const countryItems: CountryItem[] = cities.reduce(
+    (accumulator, { country, emoji }) => {
+      if (!accumulator.map((city) => city.country).includes(country)) {
+        return [...accumulator, { country: country, emoji: emoji }];
+      } else {
+        return accumulator;
+      }
+    },
+    [] as CountryItem[]
+  );
+
   return (
     <ul className={styles.countryList}>
-      {cities.map(({ country, emoji, id }) => (
-        <CountryItem country={{ country, emoji }} key={id} />
+      {countryItems.map(({ country, emoji }) => (
+        <CountryItem country={{ country, emoji }} key={country} />
       ))}
     </ul>
   );
