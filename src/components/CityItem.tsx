@@ -10,10 +10,13 @@ interface CityItemProps {
 }
 
 export const CityItem: FC<CityItemProps> = ({ city }) => {
-  const { cityName, date, emoji, id } = city;
+  const { cityName, date, emoji, id, position } = city;
   return (
     <li>
-      <Link className={styles.cityItem} to={`${id}`}>
+      <Link
+        className={styles.cityItem}
+        to={`${id}?lat=${position.lat}&lng=${position.lng}`}
+      >
         <span className={styles.emoji}>
           <CountryFlag countryCode={emoji} />
         </span>
